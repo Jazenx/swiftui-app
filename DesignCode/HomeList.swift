@@ -12,39 +12,47 @@ struct HomeList: View {
   @State var showContentView = false
   var courses = coursesData
   var body: some View {
-    VStack {
-      HStack {
-        VStack(alignment: .leading) {
-          Text("Courses")
-            .font(.largeTitle)
-            .fontWeight(.heavy)
-          Text("22 courses")
-            .foregroundColor(.gray)
-        }
-        Spacer()
-      }.padding(.leading, 70)
-        .padding(.bottom, 40)
-      
-      ScrollView(.horizontal, showsIndicators: false) {
-        HStack(spacing: 30) {
-          ForEach(courses) { item in
-            CourseView(
-              title: item.title,
-              image: item.image,
-              bgColor: item.bgColor,
-              shadowColor: item.shadowColor
-            )
-              .onTapGesture {
-                self.showContentView.toggle()
-            }
-          }.sheet(isPresented: $showContentView) {
-            ContentView()
+    ScrollView {
+      VStack {
+        HStack {
+          VStack(alignment: .leading) {
+            Text("Courses")
+              .font(.largeTitle)
+              .fontWeight(.heavy)
+            Text("22 courses")
+              .foregroundColor(.gray)
           }
-        }.padding(.leading, 40)
-          .padding(.bottom, 70)
-      }
-      Spacer()
-    }.padding(.top, 85)
+          Spacer()
+        }.padding(.leading, 70)
+          .padding(.bottom, 40)
+        
+        ScrollView(.horizontal, showsIndicators: false) {
+          HStack(spacing: 30) {
+            ForEach(courses) { item in
+              GeometryReader { geometry in
+                CourseView(
+                  title: item.title,
+                  image: item.image,
+                  bgColor: item.bgColor,
+                  shadowColor: item.shadowColor
+                )
+                  .onTapGesture {
+                    self.showContentView.toggle()
+                }
+                .rotation3DEffect(Angle(degrees: Double(geometry.frame(in: .global).minX - 40) / -20), axis: (x: 0, y: 10, z: 0))
+              }
+              .frame(width: 246, height: 360)
+            }.sheet(isPresented: $showContentView) {
+              ContentView()
+            }
+          }.padding(.leading, 40)
+            .padding(.top,20)
+            .padding(.bottom, 70)
+            Spacer()
+        }
+        CertificateRow()
+      }.padding(.top, 100)
+    }
   }
 }
 
@@ -104,5 +112,23 @@ let coursesData = [
     bgColor: Color("background4"),
     shadowColor: Color("backgroundShadow4")
   ),
+  Course(
+    title: "Swift UI Advanced",
+    image: "Illustration3",
+    bgColor: Color("background7"),
+    shadowColor: Color(hue: 0.677, saturation: 0.791, brightness: 0.788, opacity: 0.5)
+  ),
+  Course(
+    title: "Framer Playgrounds",
+    image: "Illustration4",
+    bgColor: Color("background8"),
+    shadowColor: Color(hue: 0.677, saturation: 0.791, brightness: 0.788, opacity: 0.5)
+  ),
+  Course(
+    title: "Flutter for Designers",
+    image: "Illustration5",
+    bgColor: Color("background9"),
+    shadowColor: Color(hue: 0.677, saturation: 0.791, brightness: 0.788, opacity: 0.5)
+  )
 ]
 

@@ -22,10 +22,15 @@ struct TabBar: View {
       })
         .tag(2)
       UpdateList().tabItem({
+             Image("IconSettings")
+             Text("Updates")
+           })
+             .tag(3)
+      Settings().tabItem({
         Image("IconSettings")
-        Text("Updates")
+        Text("Settings")
       })
-        .tag(3)
+        .tag(4)
     }
   }
 }

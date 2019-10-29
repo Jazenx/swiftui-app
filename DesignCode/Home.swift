@@ -39,7 +39,11 @@ struct Home: View {
 
 struct Home_Previews: PreviewProvider {
   static var previews: some View {
-    Home()
+    Group {
+      Home().previewDevice("iPhone SE")
+      Home().previewDevice("iPhone Xr")
+      Home().previewDevice("iPad Pro (9.7-inch)")
+    }
   }
 }
 
